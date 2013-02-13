@@ -12,9 +12,9 @@ TMP = $$ROOT/tmp
 BIN = $$ROOT/bin
 
 SOURCES += $$SRC/main.cpp\
-           $$SRC/fmpMainWindow.cpp
+           $$SRC/GUI/fmpMainWindow.cpp
 
-HEADERS += $$SRC/fmpMainWindow.h
+HEADERS += $$SRC/GUI/fmpMainWindow.h
 
 # config release
 MOC_DIR = $$TMP/release/moc

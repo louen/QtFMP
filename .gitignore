@@ -1,0 +1,9 @@
+*~
+fmp.sln
+fmp.sdf
+fmp.vcxproj*
+vc100.pdb
+bin
+ipch
+tmp
+fmp.suo
