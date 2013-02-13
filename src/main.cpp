@@ -1,6 +1,7 @@
+#include <GUI/fmpMainWindow.h>
+
 #include <QApplication.h>
 
-#include "fmpMainWindow.h"
 
 int main( int argc, char** argv) 
 {
