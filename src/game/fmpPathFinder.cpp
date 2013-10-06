@@ -15,11 +15,47 @@ struct OpenSetEntry
 
 struct ComparisonFunction
 {
-    // returns true if lhs is less good than rhs
+    // returns true if lhs is worse than rhs
     bool operator() ( const OpenSetEntry& lhs, const OpenSetEntry& rhs)
     {
         return lhs.cost > rhs.cost;
     }
+};
+
+class OpenSet : public std::priority_queue<OpenSetEntry, std::vector<OpenSetEntry>, ComparisonFunction >
+{
+    public:
+    std::vector<OpenSetEntry>::const_iterator find(const Hexagon* hex) const
+    {
+        for (auto it = c.begin(); it != c.end() ; ++it)
+        {
+            if (it->hex == hex)
+            {
+                return it;
+            }
+        }
+        return c.end();
+    }
+
+    void pushOrReplace(const OpenSetEntry& entry)
+    {
+        auto it = find(entry.hex);
+
+        // If the entry is not in the open list, put it immediately.
+        if (it == c.end())
+        {
+            push(entry);
+
+        }
+        //  If the entry is in the list, but has a better value, replace it.
+        else if (comp(*it, entry))
+        {
+            c.erase(it);
+            std::sort_heap(c.begin(), c.end(), comp);
+            push(entry);
+        }
+    }
+
 };
 
 bool fmpAStarPathFinder::findPath(const Hexagon& start, const Hexagon& goal, std::vector<const Hexagon*>& path)
@@ -27,7 +63,7 @@ bool fmpAStarPathFinder::findPath(const Hexagon& start, const Hexagon& goal, std
     // A* implementation
 
     // Open set is based on a std vector.
-    std::priority_queue<OpenSetEntry, std::vector<OpenSetEntry>, ComparisonFunction > open;
+    OpenSet open;
     std::set<const Hexagon*> closed;
 
     path.clear();
@@ -42,7 +78,7 @@ bool fmpAStarPathFinder::findPath(const Hexagon& start, const Hexagon& goal, std
         
         if (currentEntry.hex == &goal)
         {
-            
+            // construct path
             return true;
         }
         
@@ -54,13 +90,13 @@ bool fmpAStarPathFinder::findPath(const Hexagon& start, const Hexagon& goal, std
             const Hexagon* neighbor = currentEntry.hex->m_neighbors[i];
             if (neighbor)
             {
-                std::set<const Hexagon*>::const_iterator neighborPos = closed.find(neighbor);
-                if (neighborPos != closed.end())
+                auto neighborPosClosed = closed.find(neighbor);
+                if (neighborPosClosed != closed.end())
                 {
                     unsigned int neighborCost = cost(start, *neighbor, goal);
                     OpenSetEntry neighborEntry = {neighbor, neighborCost};
 
-                    open.push(neighborEntry);
+                    open.pushOrReplace(neighborEntry);
                 }
 
             }

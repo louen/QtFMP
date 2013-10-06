@@ -25,7 +25,8 @@ class fmpAStarPathFinder
         // Distance from start to current
         unsigned int pastCost(const Hexagon& start, const Hexagon& node);
 
-        unsigned int cost(const Hexagon& start, const Hexagon& node, const Hexagon& goal);
+        // Total cost
+        unsigned int cost(const Hexagon& start, const Hexagon& node, const Hexagon& goal) {return 0;}
 };
 
 

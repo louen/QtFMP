@@ -1,1 +1,1 @@
-C:\Qt5\5.0.1\msvc2010\bin\qmake.exe -tp vc 
+C:\Qt\Qt5.1.1\5.1.1\msvc2012_64_opengl\bin\qmake.exe -tp vc -Wall 

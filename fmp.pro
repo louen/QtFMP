@@ -14,11 +14,18 @@ BIN = $$ROOT/bin
 INCLUDEPATH += $$SRC
 
 SOURCES += $$SRC/main.cpp\
-           $$SRC/GUI/fmpMainWindow.cpp\
-            $$SRC/GUI/fmpScreen.cpp
+           $$SRC/gui/fmpMainWindow.cpp\
+            $$SRC/gui/fmpScreen.cpp\
+            $$SRC/game/fmp.cpp\
+            $$SRC/game/fmpPathFinder.cpp
 
-HEADERS += $$SRC/GUI/fmpMainWindow.h\
-            $$SRC/GUI/fmpScreen.h
+HEADERS += $$SRC/gui/fmpMainWindow.h\
+            $$SRC/gui/fmpScreen.h\
+            $$SRC/game/fmp.h \
+            $$SRC/game/fmpGame.h \
+            $$SRC/game/fmpGameObject.h \
+            $$SRC/game/fmpWeather.h  \
+            $$SRC/game/fmpPathFinder.h
 
 # config release
 MOC_DIR = $$TMP/release/moc
