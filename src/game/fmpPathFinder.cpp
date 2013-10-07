@@ -46,6 +46,7 @@ class OpenSet : public std::priority_queue<OpenSetEntry, std::vector<OpenSetEntr
         return c.end();
     }
 
+    // Adds an entry to the open list if not present, or if the node was previously registered with a higher cost.
     bool pushOrReplace(const OpenSetEntry& entry)
     {
         auto it = find(entry.m_hex);
@@ -72,6 +73,7 @@ class OpenSet : public std::priority_queue<OpenSetEntry, std::vector<OpenSetEntr
 
 };
 
+// Rebuilds the path from start to goal.
 void reconstructPath(const Hexagon & start, const Hexagon& goal, const std::unordered_map<const Hexagon*, const Hexagon*>parents, std::vector<const Hexagon*>& path)
 {
     std::stack<const Hexagon*> pathStack;
@@ -113,8 +115,6 @@ bool fmpAStarPathFinder::findPath(const Hexagon& start, const Hexagon& goal, std
 
     OpenSetEntry startEntry = {&start, 0, heuristics(start, goal)};
     open.push(startEntry);
-    path.push_back(&start);
-
 
     while( !open.empty() )
     {
@@ -135,7 +135,8 @@ bool fmpAStarPathFinder::findPath(const Hexagon& start, const Hexagon& goal, std
             if (neighbor)
             {
                 auto neighborPosClosed = closed.find(neighbor);
-                if (neighborPosClosed != closed.end())
+                // If neighbor is not in closed
+                if (neighborPosClosed == closed.end())
                 {
                     OpenSetEntry neighborEntry = {
                                         neighbor, 
