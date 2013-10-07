@@ -19,14 +19,9 @@ class fmpAStarPathFinder
 
 
     protected:
-        // Estimated distance from current to goal
-        unsigned int futureCost(const Hexagon& node, const Hexagon& goal);
+        // Estimated distance from current to goal(heuristic h(x))
+        unsigned int heuristics(const Hexagon& node, const Hexagon& goal);
 
-        // Distance from start to current
-        unsigned int pastCost(const Hexagon& start, const Hexagon& node);
-
-        // Total cost
-        unsigned int cost(const Hexagon& start, const Hexagon& node, const Hexagon& goal) {return 0;}
 };
 
 
